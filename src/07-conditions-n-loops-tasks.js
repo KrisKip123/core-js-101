@@ -100,8 +100,16 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  let res = false;
+  if (a + b > c) {
+    if (b + c > a) {
+      if (a + c > b) {
+        res = true;
+      }
+    }
+  }
+  return res;
 }
 
 
@@ -137,8 +145,23 @@ function isTriangle(/* a, b, c */) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  let res = true;
+  const x1 = rect1.left >= rect2.left ? rect1.left : rect2.left;
+  const x2 = rect1.left + rect1.width >= rect2.left + rect2.width
+    ? rect2.left + rect2.width : rect1.left + rect1.width;
+  if (x2 < x1) {
+    res = false;
+  }
+
+  const y1 = rect1.top >= rect2.top ? rect1.top : rect2.top;
+  const y2 = rect1.top + rect1.height >= rect2.top + rect2.height
+    ? rect2.top + rect2.height : rect1.top + rect1.height;
+  if (y2 < y1) {
+    res = false;
+  }
+
+  return res;
 }
 
 
@@ -168,8 +191,9 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  return Math.sqrt((circle.center.x - point.x) ** 2
+  + (circle.center.y - point.y) ** 2) < circle.radius;
 }
 
 
@@ -184,8 +208,17 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  let exp = 0;
+  return str.split('').reduce((sum, current) => {
+    if (str.split('').filter((e) => e === current).length === 1) {
+      if (exp === 0) {
+        exp += 1;
+        return current;
+      }
+    }
+    return sum;
+  }, null);
 }
 
 
@@ -404,8 +437,17 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  function proverka(arr, n) {
+    // console.log(arr.filter((item) => item[n] === arr[0][n]).length);
+    return arr.length === arr.filter((item) => item[n] === arr[0][n]).length;
+  }
+  const a = pathes.map((el) => el.split('/').slice(0, -1));
+  let i = 0;
+  while (i < a[0].length && proverka(a, i)) {
+    i += 1;
+  }
+  return i === 0 ? '' : `${a[0].slice(0, i).join('/')}/`;
 }
 
 
@@ -427,8 +469,10 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const res = new Array(m1.length).fill(0).map(() => new Array(m2[0].length).fill(0));
+  return res.map((r, i) => r
+    .map((value, j) => m1[i].reduce((sum, current, index) => sum + (current * m2[index][j]), 0)));
 }
 
 
