@@ -506,8 +506,56 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  function win(arr) {
+    let winner;
+    let rowArr = [];
+    let colArr = [];
+
+    for (let row = 0; row < 3; row += 1) {
+      for (let col = 0; col < 3; col += 1) {
+        rowArr += (arr[row][col] === undefined) ? '5' : arr[row][col];
+        colArr += (arr[col][row] === undefined) ? '5' : arr[col][row];
+      }
+    }
+    const diaComboL = rowArr.slice(0, 1) + rowArr.slice(4, 5) + rowArr.slice(8);
+    const diaComboR = rowArr.slice(2, 3) + rowArr.slice(4, 5) + rowArr.slice(6, 7);
+
+
+    switch ('XXX') {
+      case `${rowArr.slice(0, 3)}`:
+      case `${rowArr.slice(3, 6)}`:
+      case `${rowArr.slice(6, 9)}`:
+      case `${colArr.slice(0, 3)}`:
+      case `${colArr.slice(3, 6)}`:
+      case `${colArr.slice(6, 9)}`:
+      case diaComboL:
+      case diaComboR:
+        winner = 'X';
+        break;
+      default:
+        // console.log(1);
+        break;
+    }
+    switch ('000') {
+      case `${rowArr.slice(0, 3)}`:
+      case `${rowArr.slice(3, 6)}`:
+      case `${rowArr.slice(6, 9)}`:
+      case `${colArr.slice(0, 3)}`:
+      case `${colArr.slice(3, 6)}`:
+      case `${colArr.slice(6, 9)}`:
+      case diaComboL:
+      case diaComboR:
+        winner = '0';
+        break;
+      default:
+
+        break;
+    }
+
+    return winner;
+  }
+  return win(position);
 }
 
 
